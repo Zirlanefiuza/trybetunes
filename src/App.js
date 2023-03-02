@@ -9,15 +9,36 @@ import ProfileEdit from './pages/ProfileEdit';
 import NotFound from './pages/NotFound';
 
 class App extends React.Component {
+  state = {
+    inputName: '',
+
+  };
+
+  handleChange = (event) => {
+    const { target } = event;
+    this.setState(
+      {
+        [target.name]: target.value,
+      },
+    );
+  };
+
   render() {
+    const { inputName } = this.state;
     return (
 
       <div>
         <p>TrybeTunes</p>
         <Switch>
-          <Route exact path="/">
-            <Login />
-          </Route>
+          <Route
+            exact
+            path="/"
+            render={ (props) => (<Login
+              inputName={ inputName }
+              handleChange={ this.handleChange }
+              { ...props }
+            />) }
+          />
 
           <Route exact path="/search">
             <Search />
