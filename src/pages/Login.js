@@ -6,17 +6,30 @@ import Loading from '../components/Loading';
 class Login extends React.Component {
   state = {
     loading: false,
+    name: '',
+  };
+
+  handleChange = ({ target: { name, type, checked, value } }) => {
+    this.setState({
+      [name]: type === 'checkbox' ? checked : value,
+    });
+  };
+
+  onClickButton = async () => {
+    const { name } = this.state;
+    const { history: { push } } = this.props;
+    this.setState({
+      loading: true,
+    });
+    await createUser({ name });
+    this.setState({
+      loading: false,
+    }, () => push('/search'));
   };
 
   render() {
-    const { loading } = this.state;
-    const {
-      inputName,
-      handleChange,
-      history,
-    } = this.props;
+    const { loading, name } = this.state;
 
-    console.log(this.props);
     const disabledLength = 3;
     if (loading) return <Loading />;
     return (
@@ -28,9 +41,9 @@ class Login extends React.Component {
             data-testid="login-name-input"
             id="inputName"
             type="text"
-            name="inputName"
-            value={ inputName }
-            onChange={ handleChange }
+            name="name"
+            value={ name }
+            onChange={ this.handleChange }
           />
         </label>
 
@@ -38,14 +51,8 @@ class Login extends React.Component {
           data-testid="login-submit-button"
           id="loginButton"
           type="button"
-          disabled={ inputName.length < disabledLength }
-          onClick={ async () => {
-            this.setState({ loading: true });
-            await createUser({
-              name: inputName,
-            });
-            history.push('/search');
-          } }
+          disabled={ name.length < disabledLength }
+          onClick={ this.onClickButton }
         >
           Entrar
         </button>
@@ -56,8 +63,6 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  inputName: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,

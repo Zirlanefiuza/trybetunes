@@ -7,24 +7,16 @@ import Favorites from './pages/Favorites';
 import Profile from './pages/Profile';
 import ProfileEdit from './pages/ProfileEdit';
 import NotFound from './pages/NotFound';
+import Header from './components/Header';
 
 class App extends React.Component {
   state = {
-    inputName: '',
+    name: '',
 
-  };
-
-  handleChange = (event) => {
-    const { target } = event;
-    this.setState(
-      {
-        [target.name]: target.value,
-      },
-    );
   };
 
   render() {
-    const { inputName } = this.state;
+    const { name } = this.state;
     return (
 
       <div>
@@ -34,35 +26,25 @@ class App extends React.Component {
             exact
             path="/"
             render={ (props) => (<Login
-              inputName={ inputName }
+              inputName={ name }
               handleChange={ this.handleChange }
               { ...props }
             />) }
           />
 
-          <Route exact path="/search">
-            <Search />
-          </Route>
+          <Route path="/search" component={ Search } />
 
-          <Route exact path="/album/:id">
-            <Album />
-          </Route>
+          <Route path="/album/:id" component={ Album } />
 
-          <Route exact path="/favorites">
-            <Favorites />
-          </Route>
+          <Route path="/favorites" component={ Favorites } />
 
-          <Route exact path="/profile">
-            <Profile />
-          </Route>
+          <Route path="/profile" component={ Profile } />
 
-          <Route exact path="/profile/edit">
-            <ProfileEdit />
-          </Route>
+          <Route path="/profile/edit" component={ ProfileEdit } />
 
-          <Route exact path="/*">
-            <NotFound />
-          </Route>
+          <Route component={ NotFound } />
+
+          <Route exact path="/header" component={ Header } />
         </Switch>
       </div>
 
