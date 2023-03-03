@@ -1,13 +1,35 @@
 import React, { Component } from 'react';
+import { getUser } from '../services/userAPI';
+import Loading from './Loading';
+import User from './User';
 
 class Header extends Component {
-  render() {
-    return (
-      <header data-testid="hdeaer-component">
+  state = {
+    loading: true,
+    userName: '',
+  };
 
-        <h1 data-testid="header-user-name">
-          Bem Vindo!
-        </h1>
+  componentDidMount() {
+    this.getUserLogin();
+  }
+
+  getUserLogin = async () => {
+    const { name } = await getUser();
+    this.setState({
+      loading: false,
+      userName: name,
+    });
+  };
+
+  render() {
+    const { loading, userName } = this.state;
+    return (
+      <header data-testid="header-component">
+
+        {
+          (loading) ? <Loading />
+            : <User name={ userName } />
+        }
       </header>
 
     );
