@@ -76,7 +76,6 @@ class Album extends React.Component {
               <MusicCard
                 trackId={ music.trackId }
                 trackName={ music.trackName }
-                previewUrl={ music.previewUrl }
                 song={ music }
                 checked={ addFavoritesSongs.some((song) => (
                   song.trackId === music.trackId
