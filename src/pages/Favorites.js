@@ -39,7 +39,6 @@ class Favorites extends React.Component {
         <Header />
         {
           loading ? <Loading /> : (
-
             addFavoritesSongs.map((music) => (
               <MusicCard
                 key={ music.trackName }
