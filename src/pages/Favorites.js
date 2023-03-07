@@ -45,7 +45,8 @@ class Favorites extends React.Component {
                 previewUrl={ music.previewUrl }
                 trackName={ music.trackName }
                 addFavoritesSongs={ addFavoritesSongs }
-                handleChange={ this.handleChange }
+                valChecked={ () => this.handleChange(music) }
+                checked
               />
             ))
           )

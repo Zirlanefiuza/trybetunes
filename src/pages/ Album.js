@@ -38,7 +38,6 @@ class Album extends React.Component {
     this.setState({
       loading: true,
     }, async () => {
-      await addSong(value);
       if (addFavoritesSongs.some((music) => music.trackId === value.trackId)) {
         await removeSong(value);
       } else {
